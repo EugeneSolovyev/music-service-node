@@ -1,0 +1,19 @@
+version: "3"
+
+services: 
+  mongo:
+    image: aashreys/mongo-auth:latest
+    env_file:
+      - .env
+    ports:
+      - 27017:27017
+  music-service:
+    container_name: music-service-app
+    build: .
+    depends_on:
+      - mongo
+    ports:
+      - 8080:8080
+    links:
+      - mongo
+    restart: on-failure
